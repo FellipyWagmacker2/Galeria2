@@ -22,21 +22,15 @@ public class MainAdapter extends RecyclerView.Adapter {
 
 
 
-    // -------------------------------------------------------------------------------------------------------------------------------------------------
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(mainActivity); // LayoutInflater usado para ler arquivos xml
-        View v = inflater.inflate(R.layout.activity_main,parent,false); // Usando o LayoutInflater para criar elementos e gurandando ele denteo de uma View
-        return new MyViewHolder(v); //Objeto do tipo View(v) é guardado no objeto MyViewHolder, e retorna
+        LayoutInflater inflater = LayoutInflater.from(mainActivity);
+        View v = inflater.inflate(R.layout.list_item, parent, false);
+        return new MyViewHolder(v);
     }
 
-
-    // ACERTA ESSA PARTE
-    // ACERTA ESSA PARTE
-    // ACERTA ESSA PARTE
-    // ACERTA ESSA PARTE
-    // ACERTA ESSA PARTE
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imPhoto;
@@ -47,15 +41,14 @@ public class MainAdapter extends RecyclerView.Adapter {
         }
     }
 
-    // -------------------------------------------------------------------------------------------------------------------------------------------------
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ImageView imPhoto = holder.itemView.findViewById(R.id.imItem);
-        int w = (int)
-                mainActivity.getResources().getDimension(R.dimen.itemWidth);
-        int h = (int)
-                mainActivity.getResources().getDimension(R.dimen.itemHeight);
+        View v = holder.itemView;
+        ImageView imPhoto = v.findViewById(R.id.imItem);
+        int w = (int) mainActivity.getResources().getDimension(R.dimen.itemWidth);
+        int h = (int) mainActivity.getResources().getDimension(R.dimen.itemHeight);
         Bitmap bitmap = Utils.getBitmap(photos.get(position), w, h);
         imPhoto.setImageBitmap(bitmap);
         imPhoto.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +62,7 @@ public class MainAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return photos.size();
     }
 
 

@@ -2,6 +2,7 @@ package silva.fellipy.galeria2;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.tbMain); // Obtendo elemento tbMain
         setSupportActionBar(toolbar); // Indicando que tbMain deve ser considerado uma ActionBar
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File[] files = dir.listFiles();
@@ -191,5 +195,4 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-}
 }

@@ -1,5 +1,6 @@
 package silva.fellipy.galeria2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -43,12 +45,23 @@ public class PhotoActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater(); // Criando inflatador de menu
-        inflater.inflate(R.menu.main_activity_tb, menu);
+        inflater.inflate(R.menu.photo_activity_tb, menu);
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item){
+        switch (item.getItemId()){
+            case R.id.opShare:
+                sharePhoto();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     void sharePhoto() {
-        Uri photoUri = FileProvider.getUriForFile(PhotoActivity.this, "trindade.daniel.galeria.fileprovider", new File(photoPath));
+        Uri photoUri = FileProvider.getUriForFile(PhotoActivity.this, "silva.fellipy.galeria2.fileprovider", new File(photoPath));
         Intent i = new Intent(Intent.ACTION_SEND);
         i.putExtra(Intent.EXTRA_STREAM, photoUri);
         i.setType("image/jpeg");
