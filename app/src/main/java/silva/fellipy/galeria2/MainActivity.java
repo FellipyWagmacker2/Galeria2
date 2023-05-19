@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startPhotoActivity(String photoPath) {
         Intent i = new Intent(MainActivity.this, PhotoActivity.class);
-        i.putExtra("photo_path", photoPath); // Inicia a atividade de visualização da foto com o caminho da foto como extra
+        i.putExtra("photo_path", photoPath); // Inicia a atividade de visualização da foto com o caminho da foto
         startActivity(i);
     }
 
@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp;
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File f = File.createTempFile(imageFileName, ".jpg", storageDir);
-        return f; // Cria um arquivo de imagem com um nome único
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()); // Obtém a data e hora atual em formato de carimbo de data/hora
+        String imageFileName = "JPEG_" + timeStamp; // Concatena o "JPEG_" com a  data/hora para formar o nome do arquivo
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES); // Obtém o diretório de armazenamento externo para imagens
+        File f = File.createTempFile(imageFileName, ".jpg", storageDir); // Cria um arquivo temporário com o nome do arquivo de imagem
+        return f; // Retorna o arquivo de imagem criado
     }
 
     @Override
@@ -142,22 +142,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Verifica se as permissões fornecidas foram concedidas. Caso contrário, solicita as permissões ausentes.
     private void checkForPermissions(List<String> permissions) {
         List<String> permissionsNotGranted = new ArrayList<>();
 
+
         for (String permission : permissions) {
-            if (!hasPermission(permission)) {
-                permissionsNotGranted.add(permission);
+            if (!hasPermission(permission)) { // Verifica se a permissão atual não foi concedida
+                permissionsNotGranted.add(permission); // Adiciona a permissão não concedida à lista de permissões não concedidas
             }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (permissionsNotGranted.size() > 0) {
-                requestPermissions(permissionsNotGranted.toArray(new String[permissionsNotGranted.size()]), RESULT_REQUEST_PERMISSION);
+            if (permissionsNotGranted.size() > 0) { // Verifica se existem permissões não concedidas na lista
+                requestPermissions(permissionsNotGranted.toArray(new String[permissionsNotGranted.size()]), RESULT_REQUEST_PERMISSION); // Solicita as permissões não concedidas ao sistema, passando a lista de permissões como um array de strings e um código de solicitação
             }
         }
     }
 
+    // Verifica se a permissão especificada foi concedida
     private boolean hasPermission(String permission) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return ActivityCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_GRANTED;
@@ -165,23 +168,27 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        // Cria uma lista para armazenar as permissões não concedidas
         final List<String> permissionsNotGranted = new ArrayList<>();
 
-        for (int i = 0; i < grantResults.length; i++) {
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+
+        for (int i = 0; i < grantResults.length; i++) { // Itera sobre os resultados das permissões concedidas ou não concedidas
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) { // Verifica se a permissão atual não foi concedida
                 permissionsNotGranted.add(permissions[i]);
+                // Adiciona a permissão não concedida à lista de permissões não concedidas
             }
         }
 
         if (requestCode == RESULT_REQUEST_PERMISSION) {
             if (permissionsNotGranted.isEmpty()) {
-                // Todas as permissões foram concedidas
-            } else {
-                // Algumas permissões foram negadas, você pode lidar com isso de acordo com sua lógica
+                // Verifica se não há permissões não concedidas na lista
+
+            } else { // Caso todas as permissões tenham sido concedidas
             }
         }
     }

@@ -19,7 +19,7 @@ import java.io.File;
 
 public class PhotoActivity extends AppCompatActivity {
 
-    String photoPath; // Caminho da foto
+    String photoPath; // String com a foto
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class PhotoActivity extends AppCompatActivity {
         Uri photoUri = FileProvider.getUriForFile(PhotoActivity.this, "silva.fellipy.galeria2.fileprovider", new File(photoPath)); // Obtendo o URI da foto usando o FileProvider
         Intent i = new Intent(Intent.ACTION_SEND); // Criando uma intent para compartilhamento
         i.putExtra(Intent.EXTRA_STREAM, photoUri); // Definindo o URI da foto como um extra da intent
-        i.setType("image/jpeg"); // Definindo o tipo do conteúdo como imagem JPEG
+        i.setType("image/jpeg"); // Definindo o tipo do conteúdo como imagem
         startActivity(i); // Iniciando a atividade de compartilhamento
     }
 }

@@ -16,11 +16,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     List<String> photos; // Lista de URLs das fotos
 
     public MainAdapter(MainActivity mainActivity, List<String> photos) {
-        this.mainActivity = mainActivity; // Atribui a MainActivity passada como argumento
-        this.photos = photos; // Atribui a lista de URLs de fotos passada como argumento
+        this.mainActivity = mainActivity; // Atribui a MainActivity
+        this.photos = photos; // Atribui a lista de URLs de fotos
     }
 
-    // Método chamado para inflar o layout do item da lista
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -29,7 +28,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         return new MyViewHolder(v); // Retorna um novo objeto MyViewHolder com a view do item inflado
     }
 
-    // Classe interna que representa os itens da lista
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imPhoto; // Referência para o ImageView do item da lista
 
@@ -39,7 +38,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         }
     }
 
-    // Método chamado para exibir os dados nos itens da lista
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         View v = holder.itemView; // Obtém a view do item
@@ -48,15 +47,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         int h = (int) mainActivity.getResources().getDimension(R.dimen.itemHeight); // Obtém a altura do item
         Bitmap bitmap = Utils.getBitmap(photos.get(position), w, h); // Obtém o bitmap da foto na posição atual
         imPhoto.setImageBitmap(bitmap); // Define o bitmap no ImageView
-        imPhoto.setOnClickListener(new View.OnClickListener() { // Define um listener de clique para o ImageView
+        imPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.startPhotoActivity(photos.get(position)); // Inicia a atividade de exibição da foto
+                mainActivity.startPhotoActivity(photos.get(position)); // Exibição da foto
             }
         });
     }
 
-    // Método chamado para obter o número de itens na lista
     @Override
     public int getItemCount() {
         return photos.size(); // Retorna o tamanho da lista de fotos
